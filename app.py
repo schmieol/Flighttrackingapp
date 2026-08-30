@@ -9,12 +9,11 @@ from datetime import date
 
 
 # ============================================================
-# KONFIGURATION
+# APP CONFIG
 # ============================================================
 
 st.set_page_config(
     page_title="My Flight Network",
-    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -27,404 +26,263 @@ AIRPORT_DATABASE_URL = (
 
 
 # ============================================================
-# CUSTOM CSS
+# DESIGN
 # ============================================================
 
-st.markdown("""
-<style>
-
-@import url(
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
-);
-
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-}
-
-.stApp {
-    background:
-        radial-gradient(
-            circle at 10% 0%,
-            rgba(25, 95, 170, 0.18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 10%,
-            rgba(0, 170, 255, 0.08),
-            transparent 25%
-        ),
-        #080d16;
-    color: #f5f7fa;
-}
-
-/* Sidebar */
-
-[data-testid="stSidebar"] {
-    background:
-        linear-gradient(
-            180deg,
-            #0b111d 0%,
-            #080c14 100%
-        );
-    border-right: 1px solid #1d2939;
-}
-
-[data-testid="stSidebar"] > div {
-    padding-top: 2rem;
-}
-
-[data-testid="stSidebar"] .stRadio label {
-    color: #9ba8b8;
-    font-size: 14px;
-}
-
-[data-testid="stSidebar"] .stRadio label:hover {
-    color: white;
-}
-
-/* Headings */
-
-h1 {
-    font-size: 36px !important;
-    font-weight: 800 !important;
-    letter-spacing: -1px;
-}
-
-h2 {
-    font-size: 25px !important;
-    font-weight: 700 !important;
-}
-
-h3 {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-}
-
-/* Metrics */
-
-[data-testid="stMetric"] {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(21, 31, 48, 0.96),
-            rgba(13, 20, 32, 0.96)
-        );
-
-    border: 1px solid #243247;
-
-    border-radius: 16px;
-
-    padding: 20px;
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.18);
-}
-
-[data-testid="stMetricLabel"] {
-    color: #8492a6 !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-
-[data-testid="stMetricValue"] {
-    color: #ffffff !important;
-    font-size: 28px !important;
-    font-weight: 800 !important;
-}
-
-/* Buttons */
-
-.stButton > button {
-    background:
-        linear-gradient(
-            135deg,
-            #1677ff,
-            #0758c7
-        );
-
-    color: white;
-
-    border: none;
-
-    border-radius: 10px;
-
-    padding: 10px 18px;
-
-    font-weight: 600;
-
-    transition: 0.2s;
-}
-
-.stButton > button:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #2d89ff,
-            #1267dc
-        );
-
-    box-shadow:
-        0 8px 25px rgba(22, 119, 255, 0.25);
-}
-
-/* Inputs */
-
-.stTextInput input,
-.stNumberInput input,
-.stTextArea textarea {
-
-    background-color: #0e1623 !important;
-
-    color: white !important;
-
-    border: 1px solid #26364c !important;
-
-    border-radius: 10px !important;
-}
-
-.stSelectbox div[data-baseweb="select"] > div,
-.stMultiSelect div[data-baseweb="select"] > div {
-
-    background-color: #0e1623 !important;
-
-    border-color: #26364c !important;
-
-    border-radius: 10px !important;
-}
-
-/* Tabs */
-
-.stTabs [data-baseweb="tab-list"] {
-    gap: 10px;
-}
-
-.stTabs [data-baseweb="tab"] {
-    background: #101927;
-    border-radius: 8px;
-    padding: 8px 16px;
-}
-
-/* Dataframes */
-
-[data-testid="stDataFrame"] {
-    border: 1px solid #26364c;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-/* Dividers */
-
-hr {
-    border-color: #1d2939 !important;
-}
-
-/* Cards */
-
-.flight-card {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(19, 29, 44, 0.95),
-            rgba(11, 17, 28, 0.95)
-        );
-
-    border: 1px solid #233147;
-
-    border-radius: 16px;
-
-    padding: 20px;
-
-    margin-bottom: 12px;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.flight-card:hover {
-    border-color: #315176;
-}
-
-.flight-route {
-
-    font-size: 20px;
-
-    font-weight: 800;
-
-    color: white;
-
-    letter-spacing: 0.5px;
-}
-
-.flight-meta {
-
-    color: #8b9ab0;
-
-    font-size: 13px;
-
-    margin-top: 7px;
-}
-
-.section-title {
-
-    font-size: 12px;
-
-    color: #6f8097;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1.2px;
-
-    margin-bottom: 10px;
-}
-
-.hero {
-
-    padding:
-        10px 0 25px 0;
-}
-
-.hero-title {
-
-    font-size: 42px;
-
-    line-height: 1.05;
-
-    font-weight: 800;
-
-    letter-spacing: -1.5px;
-
-    margin-bottom: 10px;
-}
-
-.hero-subtitle {
-
-    color: #8d9caf;
-
-    font-size: 15px;
-}
-
-.badge {
-
-    display: inline-block;
-
-    background: rgba(22, 119, 255, 0.12);
-
-    color: #4c9aff;
-
-    border: 1px solid rgba(22, 119, 255, 0.25);
-
-    border-radius: 20px;
-
-    padding: 5px 10px;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.8px;
-}
-
-</style>
-""", unsafe_allow_html=True)
+st.markdown(
+    """
+    <style>
+
+    @import url(
+        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
+    );
+
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 10% 0%,
+                rgba(25, 95, 170, 0.18),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 10%,
+                rgba(0, 170, 255, 0.08),
+                transparent 25%
+            ),
+            #080d16;
+        color: #f5f7fa;
+    }
+
+    [data-testid="stSidebar"] {
+        background: #090f19;
+        border-right: 1px solid #1e2a3a;
+    }
+
+    [data-testid="stSidebar"] .stRadio label {
+        color: #9ba8b8;
+    }
+
+    h1 {
+        font-size: 38px !important;
+        font-weight: 800 !important;
+        letter-spacing: -1px;
+    }
+
+    h2 {
+        font-weight: 700 !important;
+    }
+
+    [data-testid="stMetric"] {
+        background:
+            linear-gradient(
+                145deg,
+                rgba(21, 31, 48, 0.96),
+                rgba(13, 20, 32, 0.96)
+            );
+        border: 1px solid #243247;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    [data-testid="stMetricLabel"] {
+        color: #8492a6 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    [data-testid="stMetricValue"] {
+        color: white !important;
+        font-size: 28px !important;
+        font-weight: 800 !important;
+    }
+
+    .stButton > button {
+        background:
+            linear-gradient(
+                135deg,
+                #1677ff,
+                #0758c7
+            );
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .stButton > button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #2d89ff,
+                #1267dc
+            );
+    }
+
+    .stTextInput input,
+    .stNumberInput input,
+    .stTextArea textarea {
+        background-color: #0e1623 !important;
+        color: white !important;
+        border: 1px solid #26364c !important;
+        border-radius: 10px !important;
+    }
+
+    .flight-card {
+        background:
+            linear-gradient(
+                145deg,
+                rgba(19, 29, 44, 0.95),
+                rgba(11, 17, 28, 0.95)
+            );
+        border: 1px solid #233147;
+        border-radius: 16px;
+        padding: 18px;
+        margin-bottom: 12px;
+    }
+
+    .flight-route {
+        font-size: 21px;
+        font-weight: 800;
+        color: white;
+    }
+
+    .flight-meta {
+        color: #8b9ab0;
+        font-size: 13px;
+        margin-top: 7px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        color: #6f8097;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-bottom: 10px;
+    }
+
+    .hero-title {
+        font-size: 43px;
+        line-height: 1.05;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        color: #8d9caf;
+        font-size: 15px;
+    }
+
+    .badge {
+        display: inline-block;
+        background: rgba(22, 119, 255, 0.12);
+        color: #4c9aff;
+        border: 1px solid rgba(22, 119, 255, 0.25);
+        border-radius: 20px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
-# DATENBANK
+# DATABASE
 # ============================================================
 
 def get_connection():
-
     return sqlite3.connect(DB_FILE)
 
 
 def init_database():
 
     conn = get_connection()
-
     cursor = conn.cursor()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS flights (
-
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-
             date TEXT NOT NULL,
-
             airline TEXT NOT NULL,
-
             flight_number TEXT,
-
             aircraft TEXT NOT NULL,
-
             departure TEXT NOT NULL,
-
             arrival TEXT NOT NULL,
-
             flight_time REAL DEFAULT 0,
-
             distance REAL DEFAULT 0,
-
             notes TEXT,
-
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
-    """)
+        """
+    )
 
-    cursor.execute("""
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS airports (
-
             ident TEXT PRIMARY KEY,
-
             type TEXT,
-
             name TEXT,
-
             latitude REAL,
-
             longitude REAL,
-
             elevation REAL,
-
             continent TEXT,
-
             iso_country TEXT,
-
             iso_region TEXT,
-
             municipality TEXT,
-
             iata_code TEXT,
-
             home_link TEXT,
-
             wikipedia_link TEXT
         )
-    """)
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS database_info (
-
-            key TEXT PRIMARY KEY,
-
-            value TEXT
-        )
-    """)
+        """
+    )
 
     conn.commit()
-
     conn.close()
 
 
 # ============================================================
-# AIRPORT DATENBANK
+# AIRPORT DATABASE
 # ============================================================
+
+def airport_database_exists():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+
+        cursor.execute(
+            "SELECT COUNT(*) FROM airports"
+        )
+
+        count = cursor.fetchone()[0]
+
+        conn.close()
+
+        return count > 0
+
+    except Exception:
+
+        conn.close()
+
+        return False
+
 
 def download_airports():
 
@@ -455,243 +313,119 @@ def import_airports(df):
     if df is None or df.empty:
         return False
 
-    conn = get_connection()
+    columns = {
+        "ident": "ident",
+        "type": "type",
+        "name": "name",
+        "latitude_deg": "latitude",
+        "longitude_deg": "longitude",
+        "elevation_ft": "elevation",
+        "continent": "continent",
+        "iso_country": "iso_country",
+        "iso_region": "iso_region",
+        "municipality": "municipality",
+        "iata_code": "iata_code",
+        "home_link": "home_link",
+        "wikipedia_link": "wikipedia_link"
+    }
 
-    required = [
+    available = {
+        source: target
+        for source, target in columns.items()
+        if source in df.columns
+    }
 
-        "ident",
-        "type",
-        "name",
-        "latitude_deg",
-        "longitude_deg",
-        "elevation_ft",
-        "continent",
-        "iso_country",
-        "iso_region",
-        "municipality",
-        "iata_code",
-        "home_link",
-        "wikipedia_link"
-    ]
-
-    available = [
-
-        column
-
-        for column in required
-
-        if column in df.columns
-    ]
-
-    df = df[available].copy()
-
-    df = df.rename(
-
-        columns={
-
-            "latitude_deg":
-                "latitude",
-
-            "longitude_deg":
-                "longitude",
-
-            "elevation_ft":
-                "elevation"
-        }
+    data = df[list(available.keys())].rename(
+        columns=available
     )
 
-    for column in [
+    for column in columns.values():
 
-        "type",
-        "name",
-        "latitude",
-        "longitude",
-        "elevation",
-        "continent",
-        "iso_country",
-        "iso_region",
-        "municipality",
-        "iata_code",
-        "home_link",
-        "wikipedia_link"
-    ]:
+        if column not in data.columns:
+            data[column] = None
 
-        if column not in df.columns:
-
-            df[column] = None
-
-    airport_types = [
-
-        "large_airport",
-        "medium_airport",
-        "small_airport",
-        "heliport",
-        "seaplane_base",
-        "balloonport",
-        "closed"
+    data = data[
+        [
+            "ident",
+            "type",
+            "name",
+            "latitude",
+            "longitude",
+            "elevation",
+            "continent",
+            "iso_country",
+            "iso_region",
+            "municipality",
+            "iata_code",
+            "home_link",
+            "wikipedia_link"
+        ]
     ]
 
-    df = df[
-        df["type"].isin(airport_types)
-    ]
-
-    df["ident"] = (
-
-        df["ident"]
-
+    data["ident"] = (
+        data["ident"]
         .fillna("")
-
         .astype(str)
-
         .str.upper()
-
         .str.strip()
     )
 
-    df = df[
-        df["ident"] != ""
-    ]
+    data = data[data["ident"] != ""]
 
-    df.to_sql(
+    conn = get_connection()
 
+    data.to_sql(
         "airports",
-
         conn,
-
         if_exists="replace",
-
         index=False
     )
 
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        INSERT OR REPLACE INTO database_info
-        (key, value)
-        VALUES (?, ?)
-    """, (
-
-        "airports_updated",
-
-        str(
-            pd.Timestamp.now()
-        )
-    ))
-
     conn.commit()
-
     conn.close()
 
     return True
 
 
-def airport_database_exists():
-
-    conn = get_connection()
-
-    cursor = conn.cursor()
-
-    try:
-
-        cursor.execute(
-            "SELECT COUNT(*) FROM airports"
-        )
-
-        count = cursor.fetchone()[0]
-
-        conn.close()
-
-        return count > 0
-
-    except Exception:
-
-        conn.close()
-
-        return False
-
-
 # ============================================================
-# AIRPORT SUCHE
+# AIRPORT SEARCH
 # ============================================================
 
 def search_airports(search):
 
-    conn = get_connection()
-
     search = search.upper().strip()
+
+    conn = get_connection()
 
     like = f"%{search}%"
 
     query = """
-
         SELECT
-
             ident,
-
             iata_code,
-
             name,
-
             municipality,
-
             iso_country,
-
             latitude,
-
             longitude
-
         FROM airports
-
         WHERE
-
             UPPER(ident) LIKE ?
-
-            OR UPPER(
-                COALESCE(iata_code, '')
-            ) LIKE ?
-
+            OR UPPER(COALESCE(iata_code, '')) LIKE ?
             OR UPPER(name) LIKE ?
-
-            OR UPPER(
-                COALESCE(municipality, '')
-            ) LIKE ?
-
-        ORDER BY
-
-            CASE
-
-                WHEN UPPER(ident) = ?
-                THEN 0
-
-                WHEN UPPER(
-                    COALESCE(iata_code, '')
-                ) = ?
-
-                THEN 1
-
-                ELSE 2
-
-            END,
-
-            name
-
+            OR UPPER(COALESCE(municipality, '')) LIKE ?
+        ORDER BY name
         LIMIT 50
     """
 
     df = pd.read_sql_query(
-
         query,
-
         conn,
-
         params=[
-
             like,
             like,
             like,
-            like,
-            search,
-            search
+            like
         ]
     )
 
@@ -705,25 +439,14 @@ def get_airport(icao):
     conn = get_connection()
 
     df = pd.read_sql_query(
-
         """
-
         SELECT *
-
         FROM airports
-
         WHERE ident = ?
-
         LIMIT 1
-
         """,
-
         conn,
-
-        params=[
-
-            icao.upper()
-        ]
+        params=[icao.upper()]
     )
 
     conn.close()
@@ -735,11 +458,10 @@ def get_airport(icao):
 
 
 # ============================================================
-# FLUGDATEN
+# FLIGHTS
 # ============================================================
 
 def add_flight(
-
     flight_date,
     airline,
     flight_number,
@@ -749,17 +471,13 @@ def add_flight(
     flight_time,
     distance,
     notes
-
 ):
 
     conn = get_connection()
 
-    cursor = conn.cursor()
-
-    cursor.execute("""
-
+    conn.execute(
+        """
         INSERT INTO flights (
-
             date,
             airline,
             flight_number,
@@ -769,26 +487,23 @@ def add_flight(
             flight_time,
             distance,
             notes
-
         )
-
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-
-    """, (
-
-        flight_date,
-        airline,
-        flight_number,
-        aircraft,
-        departure,
-        arrival,
-        flight_time,
-        distance,
-        notes
-    ))
+        """,
+        (
+            str(flight_date),
+            airline,
+            flight_number,
+            aircraft,
+            departure,
+            arrival,
+            flight_time,
+            distance,
+            notes
+        )
+    )
 
     conn.commit()
-
     conn.close()
 
 
@@ -797,17 +512,11 @@ def get_flights():
     conn = get_connection()
 
     df = pd.read_sql_query(
-
         """
-
         SELECT *
-
         FROM flights
-
         ORDER BY date DESC, id DESC
-
         """,
-
         conn
     )
 
@@ -820,31 +529,24 @@ def delete_flight(flight_id):
 
     conn = get_connection()
 
-    cursor = conn.cursor()
-
-    cursor.execute(
-
+    conn.execute(
         "DELETE FROM flights WHERE id = ?",
-
         (flight_id,)
     )
 
     conn.commit()
-
     conn.close()
 
 
 # ============================================================
-# DISTANZ
+# DISTANCE
 # ============================================================
 
 def calculate_distance(
-
     lat1,
     lon1,
     lat2,
     lon2
-
 ):
 
     radius = 6371.0
@@ -859,11 +561,8 @@ def calculate_distance(
     dlon = lon2 - lon1
 
     a = (
-
         math.sin(dlat / 2) ** 2
-
         +
-
         math.cos(lat1)
         *
         math.cos(lat2)
@@ -872,9 +571,7 @@ def calculate_distance(
     )
 
     c = 2 * math.atan2(
-
         math.sqrt(a),
-
         math.sqrt(1 - a)
     )
 
@@ -882,181 +579,104 @@ def calculate_distance(
 
 
 # ============================================================
-# AIRLINE FARBEN
+# AIRLINE COLORS
 # ============================================================
 
 AIRLINE_COLORS = {
 
-    "Lufthansa":
-        [0, 90, 180],
-
-    "Eurowings":
-        [180, 0, 90],
-
-    "Ryanair":
-        [0, 100, 200],
-
-    "easyJet":
-        [255, 100, 0],
-
-    "British Airways":
-        [50, 80, 190],
-
-    "Air France":
-        [60, 90, 210],
-
-    "KLM":
-        [0, 150, 220],
-
-    "Emirates":
-        [220, 30, 30],
-
-    "Qatar Airways":
-        [130, 0, 80],
-
-    "Turkish Airlines":
-        [220, 0, 0],
-
-    "United Airlines":
-        [0, 90, 180],
-
-    "American Airlines":
-        [0, 80, 170],
-
-    "Delta Air Lines":
-        [200, 0, 50],
-
-    "Singapore Airlines":
-        [250, 150, 0],
-
-    "Qantas":
-        [200, 0, 0]
+    "Lufthansa": [0, 90, 180],
+    "Eurowings": [180, 0, 90],
+    "Ryanair": [0, 100, 200],
+    "easyJet": [255, 100, 0],
+    "British Airways": [50, 80, 190],
+    "Air France": [60, 90, 210],
+    "KLM": [0, 150, 220],
+    "Emirates": [220, 30, 30],
+    "Qatar Airways": [130, 0, 80],
+    "Turkish Airlines": [220, 0, 0],
+    "United Airlines": [0, 90, 180],
+    "American Airlines": [0, 80, 170],
+    "Delta Air Lines": [200, 0, 50],
+    "Singapore Airlines": [250, 150, 0],
+    "Qantas": [200, 0, 0]
 }
-
-
-DEFAULT_COLOR = [
-    70,
-    130,
-    200
-]
 
 
 def get_airline_color(airline):
 
     return AIRLINE_COLORS.get(
-
         airline,
-
-        DEFAULT_COLOR
+        [70, 130, 200]
     )
 
 
 # ============================================================
-# MAP DATEN
+# MAP
 # ============================================================
 
 def create_map_data(flights):
 
     routes = []
-
     airports = {}
 
     for _, flight in flights.iterrows():
 
-        dep = get_airport(
+        departure = get_airport(
             flight["departure"]
         )
 
-        arr = get_airport(
+        arrival = get_airport(
             flight["arrival"]
         )
 
-        if not dep or not arr:
+        if not departure or not arrival:
             continue
 
         color = get_airline_color(
             flight["airline"]
         )
 
-        routes.append({
+        routes.append(
+            {
+                "from_lon": departure["longitude"],
+                "from_lat": departure["latitude"],
+                "to_lon": arrival["longitude"],
+                "to_lat": arrival["latitude"],
+                "airline": flight["airline"],
+                "flight_number": flight["flight_number"],
+                "aircraft": flight["aircraft"],
+                "departure": flight["departure"],
+                "arrival": flight["arrival"],
+                "date": flight["date"],
+                "distance": round(
+                    flight["distance"]
+                ),
+                "color": color
+            }
+        )
 
-            "from_lon":
-                dep["longitude"],
+        airports[flight["departure"]] = departure
+        airports[flight["arrival"]] = arrival
 
-            "from_lat":
-                dep["latitude"],
+    routes_df = pd.DataFrame(routes)
 
-            "to_lon":
-                arr["longitude"],
+    airport_list = []
 
-            "to_lat":
-                arr["latitude"],
+    for icao, airport in airports.items():
 
-            "airline":
-                flight["airline"],
-
-            "flight_number":
-                flight["flight_number"],
-
-            "aircraft":
-                flight["aircraft"],
-
-            "departure":
-                flight["departure"],
-
-            "arrival":
-                flight["arrival"],
-
-            "date":
-                flight["date"],
-
-            "distance":
-                flight["distance"],
-
-            "color":
-                color
-        })
-
-        airports[
-            flight["departure"]
-        ] = dep
-
-        airports[
-            flight["arrival"]
-        ] = arr
-
-    routes_df = pd.DataFrame(
-        routes
-    )
+        airport_list.append(
+            {
+                "icao": icao,
+                "name": airport["name"],
+                "city": airport["municipality"],
+                "country": airport["iso_country"],
+                "lat": airport["latitude"],
+                "lon": airport["longitude"]
+            }
+        )
 
     airports_df = pd.DataFrame(
-
-        [
-
-            {
-
-                "icao":
-                    icao,
-
-                "name":
-                    airport["name"],
-
-                "city":
-                    airport["municipality"],
-
-                "country":
-                    airport["iso_country"],
-
-                "lat":
-                    airport["latitude"],
-
-                "lon":
-                    airport["longitude"]
-            }
-
-            for icao, airport
-            in airports.items()
-        ]
+        airport_list
     )
 
     return routes_df, airports_df
@@ -1071,100 +691,75 @@ def render_map(flights):
     if routes_df.empty:
 
         st.info(
-            "Für die aktuelle Auswahl sind keine "
-            "kartierbaren Flüge vorhanden."
+            "Keine kartierbaren Flüge vorhanden."
         )
 
         return
 
     route_layer = pdk.Layer(
-
         "ArcLayer",
-
         data=routes_df,
-
         get_source_position=[
             "from_lon",
             "from_lat"
         ],
-
         get_target_position=[
             "to_lon",
             "to_lat"
         ],
-
         get_source_color=[
             "color[0]",
             "color[1]",
             "color[2]",
             220
         ],
-
         get_target_color=[
             "color[0]",
             "color[1]",
             "color[2]",
             220
         ],
-
         get_width=4,
-
         pickable=True,
-
         auto_highlight=True
     )
 
     airport_layer = pdk.Layer(
-
         "ScatterplotLayer",
-
         data=airports_df,
-
         get_position=[
             "lon",
             "lat"
         ],
-
         get_radius=35000,
-
         get_fill_color=[
             255,
             255,
             255,
             230
         ],
-
         get_line_color=[
             40,
             140,
             255,
             255
         ],
-
         get_line_width=2,
-
         stroked=True,
-
         pickable=True
     )
 
     deck = pdk.Deck(
 
         layers=[
-
             route_layer,
-
             airport_layer
         ],
 
         initial_view_state=pdk.ViewState(
-
             latitude=30,
-
             longitude=10,
-
             zoom=1.45,
-
             pitch=20
         ),
 
@@ -1174,45 +769,30 @@ def render_map(flights):
         ),
 
         tooltip={
-
             "html": """
-
                 <div style="
                     padding: 8px;
                     font-family: Arial;
                 ">
-
                     <b>{flight_number}</b><br/>
-
                     Airline: {airline}<br/>
-
                     Aircraft: {aircraft}<br/>
-
-                    Route:
-                    {departure} →
-                    {arrival}<br/>
-
+                    Route: {departure} → {arrival}<br/>
                     Date: {date}<br/>
-
-                    Distance:
-                    {distance} km
-
+                    Distance: {distance} km
                 </div>
-
             """
         }
     )
 
     st.pydeck_chart(
-
         deck,
-
         use_container_width=True
     )
 
 
 # ============================================================
-# INITIALISIERUNG
+# START
 # ============================================================
 
 init_database()
@@ -1229,17 +809,16 @@ st.sidebar.markdown(
     ">
 
         <div style="
-            color: #ffffff;
+            color: white;
             font-size: 20px;
             font-weight: 800;
-            letter-spacing: -0.5px;
         ">
             MY FLIGHT NETWORK
         </div>
 
         <div style="
             color: #65758a;
-            font-size: 11px;
+            font-size: 10px;
             margin-top: 5px;
             letter-spacing: 1px;
         ">
@@ -1254,23 +833,14 @@ st.sidebar.markdown(
 st.sidebar.divider()
 
 page = st.sidebar.radio(
-
     "Navigation",
-
     [
-
         "Dashboard",
-
         "Streckennetz",
-
         "Flug hinzufügen",
-
         "Flugbuch",
-
         "Statistik",
-
         "Flughafendatenbank"
-
     ]
 )
 
@@ -1295,7 +865,7 @@ if page == "Dashboard":
 
     st.markdown(
         """
-        <div class="hero">
+        <div style="padding-bottom: 25px;">
 
             <div class="badge">
                 MSFS 2024
@@ -1315,37 +885,14 @@ if page == "Dashboard":
         unsafe_allow_html=True
     )
 
-    # --------------------------------------------------------
-    # STATISTIK
-    # --------------------------------------------------------
-
     if flights.empty:
 
         c1, c2, c3, c4 = st.columns(4)
 
-        with c1:
-            st.metric(
-                "Flüge",
-                "0"
-            )
-
-        with c2:
-            st.metric(
-                "Flugstunden",
-                "0"
-            )
-
-        with c3:
-            st.metric(
-                "Kilometer",
-                "0"
-            )
-
-        with c4:
-            st.metric(
-                "Flughäfen",
-                "0"
-            )
+        c1.metric("Flüge", "0")
+        c2.metric("Flugstunden", "0")
+        c3.metric("Kilometer", "0")
+        c4.metric("Flughäfen", "0")
 
         st.divider()
 
@@ -1367,53 +914,34 @@ if page == "Dashboard":
         ].sum()
 
         airports = (
-
-            set(
-                flights["departure"]
-            )
-
+            set(flights["departure"])
             |
-
-            set(
-                flights["arrival"]
-            )
+            set(flights["arrival"])
         )
 
         c1, c2, c3, c4 = st.columns(4)
 
-        with c1:
+        c1.metric(
+            "Flüge",
+            f"{total_flights:,}"
+        )
 
-            st.metric(
-                "Flüge",
-                f"{total_flights:,}"
-            )
+        c2.metric(
+            "Flugstunden",
+            f"{total_hours:.1f}"
+        )
 
-        with c2:
+        c3.metric(
+            "Kilometer",
+            f"{total_distance:,.0f}"
+        )
 
-            st.metric(
-                "Flugstunden",
-                f"{total_hours:.1f}"
-            )
-
-        with c3:
-
-            st.metric(
-                "Kilometer",
-                f"{total_distance:,.0f}"
-            )
-
-        with c4:
-
-            st.metric(
-                "Flughäfen",
-                f"{len(airports):,}"
-            )
+        c4.metric(
+            "Flughäfen",
+            f"{len(airports):,}"
+        )
 
         st.divider()
-
-        # ----------------------------------------------------
-        # MAP
-        # ----------------------------------------------------
 
         st.markdown(
             '<div class="section-title">'
@@ -1422,15 +950,9 @@ if page == "Dashboard":
             unsafe_allow_html=True
         )
 
-        render_map(
-            flights
-        )
+        render_map(flights)
 
         st.divider()
-
-        # ----------------------------------------------------
-        # UNTERER BEREICH
-        # ----------------------------------------------------
 
         left, right = st.columns(
             [1.4, 1]
@@ -1445,12 +967,9 @@ if page == "Dashboard":
                 unsafe_allow_html=True
             )
 
-            recent = flights.head(5)
-
-            for _, flight in recent.iterrows():
+            for _, flight in flights.head(5).iterrows():
 
                 st.markdown(
-
                     f"""
                     <div class="flight-card">
 
@@ -1461,22 +980,15 @@ if page == "Dashboard":
                         </div>
 
                         <div class="flight-meta">
-
                             {flight["airline"]}
-
                             &nbsp;&nbsp;|&nbsp;&nbsp;
-
                             {flight["aircraft"]}
-
                             &nbsp;&nbsp;|&nbsp;&nbsp;
-
                             {flight["date"]}
-
                         </div>
 
                     </div>
                     """,
-
                     unsafe_allow_html=True
                 )
 
@@ -1490,22 +1002,13 @@ if page == "Dashboard":
             )
 
             airline_counts = (
-
-                flights[
-                    "airline"
-                ]
-
+                flights["airline"]
                 .value_counts()
-
-                .head(7)
+                .rename("Flüge")
             )
 
             st.dataframe(
-
-                airline_counts.rename(
-                    "Flights"
-                ),
-
+                airline_counts.head(7),
                 use_container_width=True
             )
 
@@ -1516,9 +1019,7 @@ if page == "Dashboard":
 
 elif page == "Streckennetz":
 
-    st.title(
-        "Streckennetz"
-    )
+    st.title("Streckennetz")
 
     flights = get_flights()
 
@@ -1530,124 +1031,79 @@ elif page == "Streckennetz":
 
     else:
 
-        col1, col2 = st.columns(2)
-
         airlines = sorted(
-
-            flights[
-                "airline"
-            ]
+            flights["airline"]
             .dropna()
             .unique()
         )
 
         aircraft = sorted(
-
-            flights[
-                "aircraft"
-            ]
+            flights["aircraft"]
             .dropna()
             .unique()
         )
 
+        col1, col2 = st.columns(2)
+
         with col1:
 
             selected_airlines = st.multiselect(
-
                 "Airlines",
-
                 airlines,
-
                 default=airlines
             )
 
         with col2:
 
             selected_aircraft = st.multiselect(
-
                 "Flugzeuge",
-
                 aircraft,
-
                 default=aircraft
             )
 
         filtered = flights[
-
-            flights[
-                "airline"
-            ].isin(
+            flights["airline"].isin(
                 selected_airlines
             )
-
             &
-
-            flights[
-                "aircraft"
-            ].isin(
+            flights["aircraft"].isin(
                 selected_aircraft
             )
         ]
 
         c1, c2, c3, c4 = st.columns(4)
 
-        with c1:
+        c1.metric(
+            "Flüge",
+            len(filtered)
+        )
 
-            st.metric(
-                "Flüge",
-                len(filtered)
+        c2.metric(
+            "Strecken",
+            filtered[
+                ["departure", "arrival"]
+            ]
+            .drop_duplicates()
+            .shape[0]
+        )
+
+        c3.metric(
+            "Flughäfen",
+            len(
+                set(filtered["departure"])
+                |
+                set(filtered["arrival"])
             )
+        )
 
-        with c2:
-
-            st.metric(
-
-                "Strecken",
-
-                filtered[
-                    [
-                        "departure",
-                        "arrival"
-                    ]
-                ]
-                .drop_duplicates()
-                .shape[0]
-            )
-
-        with c3:
-
-            st.metric(
-
-                "Flughäfen",
-
-                len(
-
-                    set(
-                        filtered["departure"]
-                    )
-
-                    |
-
-                    set(
-                        filtered["arrival"]
-                    )
-                )
-            )
-
-        with c4:
-
-            st.metric(
-
-                "Kilometer",
-
-                f"{filtered['distance'].sum():,.0f}"
-            )
+        c4.metric(
+            "Kilometer",
+            f"{filtered['distance'].sum():,.0f}"
+        )
 
         st.divider()
 
-        render_map(
-            filtered
-        )
+        render_map(filtered)
 
 
 # ============================================================
@@ -1656,14 +1112,12 @@ elif page == "Streckennetz":
 
 elif page == "Flug hinzufügen":
 
-    st.title(
-        "Flug hinzufügen"
-    )
+    st.title("Flug hinzufügen")
 
     if not airport_database_exists():
 
         st.warning(
-            "Die Flughafendatenbank ist noch nicht installiert."
+            "Die Flughafendatenbank wurde noch nicht installiert."
         )
 
         if st.button(
@@ -1675,25 +1129,21 @@ elif page == "Flug hinzufügen":
                 "Flughafendaten werden heruntergeladen..."
             ):
 
-                df = download_airports()
+                airport_df = download_airports()
 
-            if df is not None:
+            if airport_df is not None:
 
                 import_airports(
-                    df
+                    airport_df
                 )
 
                 st.success(
-                    "Flughafendatenbank wurde installiert."
+                    "Flughafendatenbank installiert."
                 )
 
                 st.rerun()
 
         st.stop()
-
-    # --------------------------------------------------------
-    # DATEN
-    # --------------------------------------------------------
 
     st.markdown(
         '<div class="section-title">'
@@ -1707,30 +1157,22 @@ elif page == "Flug hinzufügen":
     with col1:
 
         flight_date = st.date_input(
-
             "Flugdatum",
-
             value=date.today()
         )
 
         airline = st.text_input(
-
             "Airline",
-
             placeholder="Lufthansa"
         )
 
         flight_number = st.text_input(
-
             "Flugnummer",
-
             placeholder="LH206"
         )
 
         aircraft = st.text_input(
-
             "Flugzeug",
-
             placeholder="Airbus A320neo"
         )
 
@@ -1744,11 +1186,8 @@ elif page == "Flug hinzufügen":
         )
 
         departure_search = st.text_input(
-
             "Abflughafen",
-
             placeholder="ICAO, IATA oder Name",
-
             key="departure_search"
         )
 
@@ -1762,35 +1201,26 @@ elif page == "Flug hinzufügen":
 
             if not results.empty:
 
-                options = {
+                options = {}
 
-                    (
+                for _, row in results.iterrows():
+
+                    label = (
                         f"{row['ident']} | "
                         f"{row['iata_code'] or '-'} | "
                         f"{row['name']} | "
                         f"{row['municipality'] or '-'}"
-                    ):
+                    )
 
-                        row["ident"]
-
-                    for _, row
-                    in results.iterrows()
-                }
+                    options[label] = row["ident"]
 
                 selected = st.selectbox(
-
                     "Abflug auswählen",
-
-                    list(
-                        options.keys()
-                    ),
-
+                    list(options.keys()),
                     key="departure_select"
                 )
 
-                departure = options[
-                    selected
-                ]
+                departure = options[selected]
 
             else:
 
@@ -1799,11 +1229,8 @@ elif page == "Flug hinzufügen":
                 )
 
         arrival_search = st.text_input(
-
             "Zielflughafen",
-
             placeholder="ICAO, IATA oder Name",
-
             key="arrival_search"
         )
 
@@ -1817,35 +1244,26 @@ elif page == "Flug hinzufügen":
 
             if not results.empty:
 
-                options = {
+                options = {}
 
-                    (
+                for _, row in results.iterrows():
+
+                    label = (
                         f"{row['ident']} | "
                         f"{row['iata_code'] or '-'} | "
                         f"{row['name']} | "
                         f"{row['municipality'] or '-'}"
-                    ):
+                    )
 
-                        row["ident"]
-
-                    for _, row
-                    in results.iterrows()
-                }
+                    options[label] = row["ident"]
 
                 selected = st.selectbox(
-
                     "Ziel auswählen",
-
-                    list(
-                        options.keys()
-                    ),
-
+                    list(options.keys()),
                     key="arrival_select"
                 )
 
-                arrival = options[
-                    selected
-                ]
+                arrival = options[selected]
 
             else:
 
@@ -1856,25 +1274,17 @@ elif page == "Flug hinzufügen":
     st.divider()
 
     flight_time = st.number_input(
-
         "Flugzeit in Stunden",
-
         min_value=0.0,
-
         max_value=30.0,
-
         value=1.0,
-
         step=0.1
     )
 
     notes = st.text_area(
-
         "Notizen",
-
         placeholder=(
-            "Besondere Ereignisse, Wetter, "
-            "Anflug, VATSIM etc."
+            "Wetter, Anflug, besondere Ereignisse..."
         )
     )
 
@@ -1882,21 +1292,14 @@ elif page == "Flug hinzufügen":
 
     if departure and arrival:
 
-        dep = get_airport(
-            departure
-        )
-
-        arr = get_airport(
-            arrival
-        )
+        dep = get_airport(departure)
+        arr = get_airport(arrival)
 
         if dep and arr:
 
             distance = calculate_distance(
-
                 dep["latitude"],
                 dep["longitude"],
-
                 arr["latitude"],
                 arr["longitude"]
             )
@@ -1906,11 +1309,8 @@ elif page == "Flug hinzufügen":
             )
 
     if st.button(
-
         "Flug speichern",
-
         type="primary",
-
         use_container_width=True
     ):
 
@@ -1947,23 +1347,14 @@ elif page == "Flug hinzufügen":
         else:
 
             add_flight(
-
-                str(flight_date),
-
+                flight_date,
                 airline,
-
                 flight_number,
-
                 aircraft,
-
                 departure,
-
                 arrival,
-
                 flight_time,
-
                 distance,
-
                 notes
             )
 
@@ -1978,9 +1369,7 @@ elif page == "Flug hinzufügen":
 
 elif page == "Flugbuch":
 
-    st.title(
-        "Flugbuch"
-    )
+    st.title("Flugbuch")
 
     flights = get_flights()
 
@@ -1993,9 +1382,7 @@ elif page == "Flugbuch":
     else:
 
         search = st.text_input(
-
             "Flug suchen",
-
             placeholder=(
                 "Airline, Flugnummer, Flughafen "
                 "oder Flugzeug"
@@ -2009,79 +1396,46 @@ elif page == "Flugbuch":
             search = search.lower()
 
             mask = (
-
                 display
-
                 .astype(str)
-
                 .apply(
-
                     lambda column:
-
-                    column.str
-                    .lower()
+                    column.str.lower()
                     .str.contains(
                         search,
                         na=False
                     )
                 )
-
                 .any(axis=1)
             )
 
-            display = display[
-                mask
-            ]
+            display = display[mask]
 
         display = display.rename(
-
             columns={
-
-                "date":
-                    "Datum",
-
-                "airline":
-                    "Airline",
-
-                "flight_number":
-                    "Flugnummer",
-
-                "aircraft":
-                    "Flugzeug",
-
-                "departure":
-                    "Abflug",
-
-                "arrival":
-                    "Ziel",
-
-                "flight_time":
-                    "Flugzeit",
-
-                "distance":
-                    "Distanz",
-
-                "notes":
-                    "Notizen"
+                "date": "Datum",
+                "airline": "Airline",
+                "flight_number": "Flugnummer",
+                "aircraft": "Flugzeug",
+                "departure": "Abflug",
+                "arrival": "Ziel",
+                "flight_time": "Flugzeit",
+                "distance": "Distanz",
+                "notes": "Notizen"
             }
         )
 
         display = display.drop(
-
             columns=[
                 "id",
                 "created_at"
             ],
-
             errors="ignore"
         )
 
         st.dataframe(
-
             display,
-
             use_container_width=True,
-
             hide_index=True
         )
 
@@ -2091,34 +1445,26 @@ elif page == "Flugbuch":
             "Flug löschen"
         )
 
-        options = {
+        options = {}
 
-            (
+        for _, row in flights.iterrows():
+
+            label = (
                 f"{row['date']} | "
                 f"{row['flight_number']} | "
                 f"{row['departure']} → "
                 f"{row['arrival']} | "
                 f"{row['aircraft']}"
-            ):
+            )
 
-                row["id"]
-
-            for _, row
-            in flights.iterrows()
-        }
+            options[label] = row["id"]
 
         selected = st.selectbox(
-
             "Flug auswählen",
-
-            list(
-                options.keys()
-            )
+            list(options.keys())
         )
 
-        if st.button(
-            "Flug löschen"
-        ):
+        if st.button("Flug löschen"):
 
             delete_flight(
                 options[selected]
@@ -2137,9 +1483,7 @@ elif page == "Flugbuch":
 
 elif page == "Statistik":
 
-    st.title(
-        "Statistik"
-    )
+    st.title("Statistik")
 
     flights = get_flights()
 
@@ -2151,9 +1495,7 @@ elif page == "Statistik":
 
     else:
 
-        total_flights = len(
-            flights
-        )
+        total_flights = len(flights)
 
         total_hours = flights[
             "flight_time"
@@ -2164,61 +1506,38 @@ elif page == "Statistik":
         ].sum()
 
         airport_count = len(
-
-            set(
-                flights["departure"]
-            )
-
+            set(flights["departure"])
             |
-
-            set(
-                flights["arrival"]
-            )
+            set(flights["arrival"])
         )
-
-        airline_count = flights[
-            "airline"
-        ].nunique()
-
-        aircraft_count = flights[
-            "aircraft"
-        ].nunique()
 
         c1, c2, c3, c4 = st.columns(4)
 
-        with c1:
+        c1.metric(
+            "Flüge",
+            total_flights
+        )
 
-            st.metric(
-                "Flüge",
-                total_flights
-            )
+        c2.metric(
+            "Flugstunden",
+            f"{total_hours:.1f}"
+        )
 
-        with c2:
+        c3.metric(
+            "Kilometer",
+            f"{total_distance:,.0f}"
+        )
 
-            st.metric(
-                "Flugstunden",
-                f"{total_hours:.1f}"
-            )
-
-        with c3:
-
-            st.metric(
-                "Kilometer",
-                f"{total_distance:,.0f}"
-            )
-
-        with c4:
-
-            st.metric(
-                "Flughäfen",
-                airport_count
-            )
+        c4.metric(
+            "Flughäfen",
+            airport_count
+        )
 
         st.divider()
 
-        c1, c2 = st.columns(2)
+        left, right = st.columns(2)
 
-        with c1:
+        with left:
 
             st.markdown(
                 '<div class="section-title">'
@@ -2228,23 +1547,16 @@ elif page == "Statistik":
             )
 
             airline_stats = (
-
-                flights[
-                    "airline"
-                ]
-
+                flights["airline"]
                 .value_counts()
-
-                .rename(
-                    "Flüge"
-                )
+                .rename("Flüge")
             )
 
             st.bar_chart(
                 airline_stats
             )
 
-        with c2:
+        with right:
 
             st.markdown(
                 '<div class="section-title">'
@@ -2254,16 +1566,9 @@ elif page == "Statistik":
             )
 
             aircraft_stats = (
-
-                flights[
-                    "aircraft"
-                ]
-
+                flights["aircraft"]
                 .value_counts()
-
-                .rename(
-                    "Flüge"
-                )
+                .rename("Flüge")
             )
 
             st.bar_chart(
@@ -2277,22 +1582,17 @@ elif page == "Statistik":
         )
 
         routes = (
-
             flights
-
             .groupby(
                 [
                     "departure",
                     "arrival"
                 ]
             )
-
             .size()
-
             .reset_index(
                 name="Flüge"
             )
-
             .sort_values(
                 "Flüge",
                 ascending=False
@@ -2300,75 +1600,25 @@ elif page == "Statistik":
         )
 
         routes["Strecke"] = (
-
-            routes[
-                "departure"
-            ]
-
+            routes["departure"]
             + " → "
-
-            + routes[
-                "arrival"
-            ]
+            + routes["arrival"]
         )
 
         st.dataframe(
-
             routes[
                 [
                     "Strecke",
                     "Flüge"
                 ]
             ],
-
             use_container_width=True,
-
             hide_index=True
         )
 
-        st.divider()
-
-        st.subheader(
-            "Flüge pro Jahr"
-        )
-
-        flights["year"] = (
-
-            pd.to_datetime(
-                flights["date"]
-            ).dt.year
-        )
-
-        st.bar_chart(
-
-            flights[
-                "year"
-            ]
-            .value_counts()
-            .sort_index()
-        )
-
-        st.divider()
-
-        c1, c2 = st.columns(2)
-
-        with c1:
-
-            st.metric(
-                "Airlines",
-                airline_count
-            )
-
-        with c2:
-
-            st.metric(
-                "Flugzeugtypen",
-                aircraft_count
-            )
-
 
 # ============================================================
-# FLUGHAFENDATENBANK
+# AIRPORT DATABASE
 # ============================================================
 
 elif page == "Flughafendatenbank":
@@ -2378,8 +1628,8 @@ elif page == "Flughafendatenbank":
     )
 
     st.write(
-        "Die weltweiten Flughafendaten werden "
-        "lokal in SQLite gespeichert."
+        "Die Flughafendaten werden lokal "
+        "in deiner SQLite-Datenbank gespeichert."
     )
 
     st.divider()
@@ -2389,17 +1639,13 @@ elif page == "Flughafendatenbank":
         conn = get_connection()
 
         count = pd.read_sql_query(
-
             "SELECT COUNT(*) AS count FROM airports",
-
             conn
-
         ).iloc[0]["count"]
 
         conn.close()
 
         st.success(
-
             f"Flughafendatenbank aktiv: "
             f"{count:,} Flughäfen"
         )
@@ -2410,21 +1656,13 @@ elif page == "Flughafendatenbank":
             "Noch keine Flughafendatenbank installiert."
         )
 
-    st.subheader(
-        "Datenbank aktualisieren"
-    )
-
     if st.button(
-
         "Flughafendatenbank herunterladen",
-
         type="primary",
-
         use_container_width=True
     ):
 
         with st.spinner(
-
             "Flughafendaten werden heruntergeladen..."
         ):
 
@@ -2433,7 +1671,6 @@ elif page == "Flughafendatenbank":
         if airport_df is not None:
 
             with st.spinner(
-
                 "Daten werden lokal gespeichert..."
             ):
 
@@ -2444,7 +1681,6 @@ elif page == "Flughafendatenbank":
             if success:
 
                 st.success(
-
                     f"{len(airport_df):,} "
                     "Flughäfen wurden importiert."
                 )
@@ -2460,9 +1696,7 @@ elif page == "Flughafendatenbank":
         )
 
         search = st.text_input(
-
             "Suche",
-
             placeholder=(
                 "ICAO, IATA, Flughafenname "
                 "oder Stadt"
@@ -2484,37 +1718,19 @@ elif page == "Flughafendatenbank":
             else:
 
                 results = results.rename(
-
                     columns={
-
-                        "ident":
-                            "ICAO",
-
-                        "iata_code":
-                            "IATA",
-
-                        "name":
-                            "Flughafen",
-
-                        "municipality":
-                            "Stadt",
-
-                        "iso_country":
-                            "Land",
-
-                        "latitude":
-                            "Latitude",
-
-                        "longitude":
-                            "Longitude"
+                        "ident": "ICAO",
+                        "iata_code": "IATA",
+                        "name": "Flughafen",
+                        "municipality": "Stadt",
+                        "iso_country": "Land",
+                        "latitude": "Latitude",
+                        "longitude": "Longitude"
                     }
                 )
 
                 st.dataframe(
-
                     results,
-
                     use_container_width=True,
-
                     hide_index=True
                 )
