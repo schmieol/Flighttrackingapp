@@ -33,15 +33,239 @@ AIRPORT_DATABASE_URL = (
 st.markdown("""
 <style>
 
-[data-testid="stMetric"] {
-    background-color: #161b22;
-    border: 1px solid #30363d;
-    padding: 15px;
-    border-radius: 12px;
+:root {
+    --background: #0b1120;
+    --card: #111827;
+    --card-hover: #172033;
+    --border: #263247;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-dark: #0284c7;
 }
 
-.stButton > button {
+html, body, [data-testid="stAppViewContainer"] {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(14, 165, 233, 0.10),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(99, 102, 241, 0.08),
+            transparent 35%
+        ),
+        var(--background);
+    color: var(--text);
+}
+
+/* Hauptbereich */
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    max-width: 1500px;
+}
+
+/* Sidebar */
+
+section[data-testid="stSidebar"] {
+    background:
+        linear-gradient(
+            180deg,
+            #0f172a 0%,
+            #0b1120 100%
+        );
+
+    border-right: 1px solid #1e293b;
+}
+
+section[data-testid="stSidebar"] h1 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+section[data-testid="stSidebar"] .stRadio label {
     border-radius: 8px;
+    padding: 7px 10px;
+}
+
+/* Überschriften */
+
+h1, h2, h3 {
+    color: #f8fafc !important;
+    letter-spacing: -0.4px;
+}
+
+h1 {
+    font-size: 2.1rem !important;
+}
+
+h2 {
+    font-size: 1.5rem !important;
+}
+
+h3 {
+    font-size: 1.15rem !important;
+}
+
+/* Karten / Container */
+
+div[data-testid="stMetric"] {
+    background:
+        linear-gradient(
+            145deg,
+            #111827,
+            #0f172a
+        );
+
+    border: 1px solid #263247;
+    padding: 18px;
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+div[data-testid="stMetric"]:hover {
+    border-color: #334155;
+}
+
+/* Buttons */
+
+.stButton > button {
+    border-radius: 9px;
+    border: 1px solid #334155;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1e293b,
+            #172033
+        );
+
+    color: #f8fafc;
+
+    font-weight: 600;
+
+    transition:
+        all 0.15s ease;
+}
+
+.stButton > button:hover {
+    border-color: #38bdf8;
+
+    background:
+        linear-gradient(
+            135deg,
+            #164e63,
+            #1e293b
+        );
+
+    color: white;
+}
+
+/* Primäre Buttons */
+
+button[kind="primary"] {
+    background:
+        linear-gradient(
+            135deg,
+            #0284c7,
+            #2563eb
+        ) !important;
+
+    border: none !important;
+}
+
+button[kind="primary"]:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #0369a1,
+            #1d4ed8
+        ) !important;
+}
+
+/* Eingabefelder */
+
+div[data-baseweb="input"],
+div[data-baseweb="select"],
+textarea {
+    border-radius: 9px !important;
+}
+
+/* ============================================================
+   MULTISELECT IM STRECKENNETZ
+   ============================================================ */
+
+/* Hintergrund und Rahmen */
+
+div[data-testid="stMultiSelect"] div[data-baseweb="select"] > div {
+    background-color: #0b1120 !important;
+    border-color: #0b1120 !important;
+    box-shadow: none !important;
+}
+
+/* Beim Darüberfahren */
+
+div[data-testid="stMultiSelect"] div[data-baseweb="select"] > div:hover {
+    border-color: #0b1120 !important;
+}
+
+/* Beim Fokussieren */
+
+div[data-testid="stMultiSelect"] div[data-baseweb="select"] > div:focus-within {
+    border-color: #0b1120 !important;
+    box-shadow: none !important;
+}
+
+/* Ausgewählte Tags */
+
+div[data-testid="stMultiSelect"] [data-baseweb="tag"] {
+    background-color: #1e293b !important;
+    border-color: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+/* Dataframes */
+
+[data-testid="stDataFrame"] {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #263247;
+}
+
+/* Divider */
+
+hr {
+    border-color: #1e293b;
+}
+
+/* Info / Success / Warning */
+
+div[data-testid="stAlert"] {
+    border-radius: 10px;
+}
+
+/* Selectbox */
+
+div[data-baseweb="select"] > div {
+    border-radius: 9px;
+}
+
+/* Multiselect */
+
+div[data-baseweb="select"] {
+    border-radius: 9px;
+}
+
+/* Text */
+
+.small-muted {
+    color: #94a3b8;
+    font-size: 0.9rem;
 }
 
 </style>
@@ -523,74 +747,6 @@ def calculate_distance(
 
 
 # ============================================================
-# AIRLINE-FARBEN
-# ============================================================
-
-AIRLINE_COLORS = {
-
-    "Lufthansa":
-        [0, 90, 180],
-
-    "Eurowings":
-        [180, 0, 90],
-
-    "Ryanair":
-        [0, 100, 200],
-
-    "easyJet":
-        [255, 100, 0],
-
-    "British Airways":
-        [50, 80, 190],
-
-    "Air France":
-        [60, 90, 210],
-
-    "KLM":
-        [0, 150, 220],
-
-    "Emirates":
-        [220, 30, 30],
-
-    "Qatar Airways":
-        [130, 0, 80],
-
-    "Turkish Airlines":
-        [220, 0, 0],
-
-    "United Airlines":
-        [0, 90, 180],
-
-    "American Airlines":
-        [0, 80, 170],
-
-    "Delta Air Lines":
-        [200, 0, 50],
-
-    "Singapore Airlines":
-        [250, 150, 0],
-
-    "Qantas":
-        [200, 0, 0]
-}
-
-
-DEFAULT_COLOR = [
-    130,
-    130,
-    130
-]
-
-
-def get_airline_color(airline):
-
-    return AIRLINE_COLORS.get(
-        airline,
-        DEFAULT_COLOR
-    )
-
-
-# ============================================================
 # INITIALISIERUNG
 # ============================================================
 
@@ -606,7 +762,7 @@ st.sidebar.title(
 )
 
 st.sidebar.caption(
-    "MSFS 2024 Flight Logbook"
+    "Flight Logbook"
 )
 
 st.sidebar.divider()
@@ -1115,10 +1271,12 @@ elif page == "Streckennetz":
     else:
 
         # ----------------------------------------------------
-        # FILTER
+        # FILTER UND ROUTENFARBE
         # ----------------------------------------------------
 
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(
+            [1, 1, 0.45]
+        )
 
         airlines = sorted(
             flights["airline"]
@@ -1140,7 +1298,9 @@ elif page == "Streckennetz":
 
                 airlines,
 
-                default=airlines
+                default=airlines,
+
+                key="network_airlines"
             )
 
         with col2:
@@ -1151,8 +1311,25 @@ elif page == "Streckennetz":
 
                 aircraft,
 
-                default=aircraft
+                default=aircraft,
+
+                key="network_aircraft"
             )
+
+        with col3:
+
+            route_color = st.color_picker(
+
+                "Routenfarbe",
+
+                "#38BDF8",
+
+                key="route_color"
+            )
+
+        # ----------------------------------------------------
+        # FILTER ANWENDEN
+        # ----------------------------------------------------
 
         filtered = flights[
 
@@ -1165,6 +1342,21 @@ elif page == "Streckennetz":
             flights["aircraft"].isin(
                 selected_aircraft
             )
+        ]
+
+        # ----------------------------------------------------
+        # ROUTENFARBE IN RGB UMWANDELN
+        # ----------------------------------------------------
+
+        hex_color = route_color.lstrip("#")
+
+        route_rgb = [
+
+            int(hex_color[0:2], 16),
+
+            int(hex_color[2:4], 16),
+
+            int(hex_color[4:6], 16)
         ]
 
         # ----------------------------------------------------
@@ -1228,10 +1420,12 @@ elif page == "Streckennetz":
         st.divider()
 
         # ----------------------------------------------------
-        # ROUTEN ERSTELLEN
+        # ROUTEN UND FLUGHÄFEN
         # ----------------------------------------------------
 
         routes = []
+
+        airports = {}
 
         for _, flight in filtered.iterrows():
 
@@ -1245,10 +1439,6 @@ elif page == "Streckennetz":
 
             if not dep or not arr:
                 continue
-
-            color = get_airline_color(
-                flight["airline"]
-            )
 
             routes.append({
 
@@ -1286,18 +1476,26 @@ elif page == "Streckennetz":
                     flight["distance"],
 
                 "color":
-                    color
+                    route_rgb
             })
+
+            airports[
+                flight["departure"]
+            ] = dep
+
+            airports[
+                flight["arrival"]
+            ] = arr
 
         routes_df = pd.DataFrame(
             routes
         )
 
-        # ----------------------------------------------------
-        # KARTE
-        # ----------------------------------------------------
-
         if not routes_df.empty:
+
+            # ------------------------------------------------
+            # ROUTEN
+            # ------------------------------------------------
 
             route_layer = pdk.Layer(
 
@@ -1335,6 +1533,10 @@ elif page == "Streckennetz":
 
                 auto_highlight=True
             )
+
+            # ------------------------------------------------
+            # KARTE
+            # ------------------------------------------------
 
             deck = pdk.Deck(
 
@@ -1376,7 +1578,13 @@ elif page == "Streckennetz":
                             "14px",
 
                         "padding":
-                            "12px"
+                            "12px",
+
+                        "border":
+                            "1px solid #334155",
+
+                        "borderRadius":
+                            "8px"
                     }
                 }
             )
